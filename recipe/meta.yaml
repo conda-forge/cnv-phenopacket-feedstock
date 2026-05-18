@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cnv_phenopacket-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/cnv_phenopacket-{{ version }}.tar.gz
   sha256: a4aeddbf74047a4864303e9b0f101b2fc5c15cdef4994fc27c04b399b7c259a0
 
 build:
@@ -14,14 +14,14 @@ build:
     - cnv-phenopacket = phenopacket.cnv_phenopacket:tsv_to_phenopacket
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pip
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - jsonschema
 
 test:
@@ -32,6 +32,7 @@ test:
     - cnv-phenopacket --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   summary: Convert TSV metadata to Phenopacket JSON
